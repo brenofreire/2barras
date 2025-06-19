@@ -1,0 +1,28 @@
+<div class="user-publications">
+  <div class="page-header">
+    <h2>Publicações</h2>
+    <p>Veja todas as publicações e comunicados da villa</p>
+  </div>
+
+  <div class="publications-container">
+    <div class="publication-card" *ngFor="let publication of publicationService.publications()">
+      <div class="publication-header">
+        <h3>{{ publication.title }}</h3>
+        <div class="publication-meta">
+          <span class="author">Por {{ publication.authorName }}</span>
+          <span class="date">{{ formatDate(publication.createdAt) }}</span>
+        </div>
+      </div>
+
+      <div class="publication-content">
+        {{ publication.content }}
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="publicationService.publications().length === 0">
+      <div class="empty-icon">📰</div>
+      <h3>Nenhuma publicação disponível</h3>
+      <p>Não há publicações no momento</p>
+    </div>
+  </div>
+</div>

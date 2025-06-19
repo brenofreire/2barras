@@ -1,0 +1,26 @@
+<div class="user-dashboard">
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Villa 2barras</h1>
+      <div class="user-info">
+        <span>Bem-vindo, {{ authService.currentUser()?.name }}</span>
+        <button class="btn-logout" (click)="logout()">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="dashboard-nav">
+    <a routerLink="/user/expenses" routerLinkActive="active" class="nav-link">
+      <span class="nav-icon">🗳️</span>
+      Votar em Despesas
+    </a>
+    <a routerLink="/user/publications" routerLinkActive="active" class="nav-link">
+      <span class="nav-icon">📰</span>
+      Ver Publicações
+    </a>
+  </nav>
+
+  <main class="dashboard-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

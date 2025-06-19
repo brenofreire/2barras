@@ -1,0 +1,56 @@
+<div class="create-publication">
+  <div class="page-header">
+    <h2>Nova Publicação</h2>
+    <p>Crie uma nova publicação para informar os moradores</p>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="publicationForm" (ngSubmit)="onSubmit()" class="publication-form">
+      <div class="form-group">
+        <label for="title">Título da Publicação</label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          class="form-control"
+          placeholder="Ex: Horários da Piscina"
+          [class.error]="publicationForm.get('title')?.invalid && publicationForm.get('title')?.touched"
+        />
+        <div class="error-message" *ngIf="publicationForm.get('title')?.invalid && publicationForm.get('title')?.touched">
+          <span *ngIf="publicationForm.get('title')?.errors?.['required']">Título é obrigatório</span>
+          <span *ngIf="publicationForm.get('title')?.errors?.['minlength']">Título deve ter pelo menos 3 caracteres</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="content">Conteúdo</label>
+        <textarea
+          id="content"
+          formControlName="content"
+          class="form-control textarea"
+          rows="8"
+          placeholder="Escreva o conteúdo da publicação..."
+          [class.error]="publicationForm.get('content')?.invalid && publicationForm.get('content')?.touched"
+        ></textarea>
+        <div class="error-message" *ngIf="publicationForm.get('content')?.invalid && publicationForm.get('content')?.touched">
+          <span *ngIf="publicationForm.get('content')?.errors?.['required']">Conteúdo é obrigatório</span>
+          <span *ngIf="publicationForm.get('content')?.errors?.['minlength']">Conteúdo deve ter pelo menos 10 caracteres</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cancel()">
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="publicationForm.invalid || isLoading()"
+        >
+          <span *ngIf="isLoading()">Publicando...</span>
+          <span *ngIf="!isLoading()">Publicar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

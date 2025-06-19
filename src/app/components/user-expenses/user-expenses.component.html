@@ -1,0 +1,80 @@
+<div class="user-expenses">
+  <div class="page-header">
+    <h2>Votar em Despesas</h2>
+    <p>Vote nas despesas propostas para a villa</p>
+  </div>
+
+  <div class="expenses-grid">
+    <div class="expense-card" *ngFor="let expense of expensesSignal()">
+      <div class="expense-header">
+        <h3>{{ expense.title }}</h3>
+        <div class="expense-value">{{ formatCurrency(expense.value) }}</div>
+      </div>
+
+      <div class="expense-description">
+        {{ expense.description }}
+      </div>
+
+      <div class="expense-meta">
+        <div class="meta-item">
+          <span class="meta-label">Prazo:</span>
+          <span class="meta-value" [class.expired]="isExpired(expense.deadline)">
+            {{ formatDate(expense.deadline) }}
+          </span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Criado em:</span>
+          <span class="meta-value">{{ formatDate(expense.createdAt) }}</span>
+        </div>
+      </div>
+
+      <div class="voting-section" *ngIf="!isExpired(expense.deadline)">
+        <div class="vote-status" *ngIf="hasUserVoted(expense)">
+          <span class="voted-message">
+            Você {{ getUserVote(expense) === 'approve' ? 'aprovou' : 'rejeitou' }} esta despesa
+          </span>
+        </div>
+
+        <div class="vote-buttons">
+          <button
+            class="vote-btn approve"
+            [class.selected]="getUserVote(expense) === 'approve'"
+            (click)="vote(expense.id, 'approve')"
+          >
+            👍 Aprovar
+          </button>
+          <button
+            class="vote-btn reject"
+            [class.selected]="getUserVote(expense) === 'reject'"
+            (click)="vote(expense.id, 'reject')"
+          >
+            👎 Rejeitar
+          </button>
+        </div>
+      </div>
+
+      <div class="expired-notice" *ngIf="isExpired(expense.deadline)">
+        <span class="expired-text">⏰ Prazo de votação expirado</span>
+      </div>
+
+      <div class="vote-summary">
+        <div class="vote-count">
+          <span class="approve-count">
+            👍
+            {{ getApproveCount(expense) }} aprovações
+          </span>
+          <span class="reject-count">
+            👎
+            {{ getRejectCount(expense) }} rejeições
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="expensesSignal().length === 0">
+      <div class="empty-icon">🗳️</div>
+      <h3>Nenhuma despesa para votar</h3>
+      <p>Não há despesas disponíveis para votação no momento</p>
+    </div>
+  </div>
+</div>

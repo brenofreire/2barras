@@ -1,0 +1,38 @@
+<div class="publication-list">
+  <div class="page-header">
+    <div class="header-content">
+      <div>
+        <h2>Gerenciar Publicações</h2>
+        <p>Visualize e gerencie todas as publicações da villa</p>
+      </div>
+      <a routerLink="/admin/publications/create" class="btn-primary">
+        + Nova Publicação
+      </a>
+    </div>
+  </div>
+
+  <div class="publications-container">
+    <div class="publication-card" *ngFor="let publication of publicationService.publications()">
+      <div class="publication-header">
+        <h3>{{ publication.title }}</h3>
+        <div class="publication-meta">
+          <span class="author">Por {{ publication.authorName }}</span>
+          <span class="date">{{ formatDate(publication.createdAt) }}</span>
+        </div>
+      </div>
+
+      <div class="publication-content">
+        {{ publication.content }}
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="publicationService.publications().length === 0">
+      <div class="empty-icon">📢</div>
+      <h3>Nenhuma publicação cadastrada</h3>
+      <p>Crie sua primeira publicação para começar</p>
+      <a routerLink="/admin/publications/create" class="btn-primary">
+        Criar Primeira Publicação
+      </a>
+    </div>
+  </div>
+</div>
